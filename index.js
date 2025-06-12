@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
 app.use(express.json());
 
-// CREAR persona
+// Rutas CRUD para Person
 app.post('/persons', async (req, res) => {
   try {
     const newPerson = new Person(req.body);
@@ -24,13 +24,11 @@ app.post('/persons', async (req, res) => {
   }
 });
 
-// Listar todas las personas
 app.get('/persons', async (req, res) => {
   const people = await Person.find();
   res.json(people);
 });
 
-// Obtener persona por ID
 app.get('/persons/:id', async (req, res) => {
   try {
     const person = await Person.findById(req.params.id);
@@ -41,7 +39,6 @@ app.get('/persons/:id', async (req, res) => {
   }
 });
 
-// Actualizar persona
 app.put('/persons/:id', async (req, res) => {
   try {
     const updated = await Person.findByIdAndUpdate(
@@ -56,7 +53,6 @@ app.put('/persons/:id', async (req, res) => {
   }
 });
 
-// Eliminar persona
 app.delete('/persons/:id', async (req, res) => {
   try {
     const result = await Person.findByIdAndDelete(req.params.id);
@@ -67,6 +63,11 @@ app.delete('/persons/:id', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`API escuchando en http://localhost:${PORT}`);
-});
+// Arranque del servidor solo si se ejecuta directamente
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`API escuchando en http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
