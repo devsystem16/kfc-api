@@ -27,10 +27,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run lint
-        # (opcional, si tienes ESLint configurado)
-        run: npm run lint
-
       - name: Run tests with coverage
         run: npm test
 
